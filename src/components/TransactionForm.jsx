@@ -1,39 +1,17 @@
-import { useState } from "react";
-import { Button, Container, IconButton, TextField, Typography, Stack, Alert, Card, CardContent, List, LinearProgress, ListItem, ListItemText } from "@mui/material";
-import DeleteIcon from '@mui/icons-material/Delete';
+import { Button, TextField, Typography, Stack, Alert } from "@mui/material";
 
-let nextId = 0;
-const padZero = (value) => value.toString().padStart(2, '0');
-
-function displayDate() {
-  const now = new Date();
-  const year = padZero(now.getFullYear());
-  const month = padZero(now.getMonth()+1);
-  const day = padZero(now.getDate());
-  const date = `${year}:${month}:${day}`
-  return date
-}
-
-export default function TransactionForm() {
-    const [transactions, setTransactions] = useState([]);
-    const [amount, setAmount] = useState('');
-
+export default function TransactionForm({onAdd, amount, setAmount, errorMessage, setErrorMessage}) {  //  親から子に渡されたpropsはオブジェクトなので分割代入でかくとそのまま使えるprops.onAddと書かなくていい
+    //  登録処理
     const handleRegister = () => {
         const parsedAmount = parseFloat(amount);
-        //  登録処理
-        setTransactions([
-            ...transactions,
-            {id: nextId++, amount: parsedAmount, date: displayDate()}
-        ]);
-
-        //  初期化
-        setAmount('');
-    }
-
-    //  削除処理
-    const handleRemove = (idToRemove) => {
-        setTransactions(transactions.filter((item) => item.id !== idToRemove));
-    }
+        if (amount.trim() === "" || isNaN(parsedAmount) || parsedAmount <= 0) {
+            setErrorMessage('学習時間が入力されていません。')
+            return;
+        }
+        onAdd(parsedAmount); // 親で定義した関数を呼び出すので親に渡すことができる
+        setAmount("");
+        setErrorMessage('');
+    };
     return (
         <>
             <Stack spacing={1}>
@@ -44,25 +22,8 @@ export default function TransactionForm() {
                 <Button variant="contained" color="primary" onClick={handleRegister}>登録</Button>
                 {/* <Alert>{errorMessage}</Alert> */}
                 {/* エラーメッセージがあるときだけ表示 */}
-                {/* {errorMessage && <Alert severity="error">{errorMessage}</Alert>} */}
+                {errorMessage && <Alert severity="error">{errorMessage}</Alert>}
             </Stack>
-            {transactions.length === 0 ? (
-                <Typography color="text.secondary">まだ記録がありません</Typography>
-            ) : (
-                <Card sx={{ mt: 3, mb: 3}}>
-                    <CardContent>
-                        <Typography variant="h6">取引リスト</Typography>
-                        <List>
-                            {transactions.map(item => (
-                                <ListItem key={item.id}>
-                                    <ListItemText primary={`金額:${item.amount} 日付:(${item.date})`} />
-                                    <IconButton onClick={() => handleRemove(item.id)} aria-label="削除"><DeleteIcon /></IconButton>
-                                </ListItem>
-                            ))}
-                        </List>
-                    </CardContent>
-                </Card>
-            )}
         </>
     )
 }
