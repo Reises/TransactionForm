@@ -11,7 +11,7 @@
 # サイト
 以下のリンクから本アプリをご確認いただけます。
 <br>
-[学習アプリ](https://reises.github.io/TransactionForm/)
+[収支トラッカーアプリ](https://reises.github.io/TransactionForm/)
 
 # アーキテクチャ
 * フロントエンド：React + JavaScript + Vite
