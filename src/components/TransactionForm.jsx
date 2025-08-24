@@ -1,11 +1,16 @@
+import { useState } from "react";
 import { Button, TextField, Typography, Stack, Alert, Select, InputLabel, FormControl, MenuItem } from "@mui/material";
 
-export default function TransactionForm({onAdd, amount, setAmount, errorMessage, setErrorMessage, type, setType}) {  //  親から子に渡されたpropsはオブジェクトなので分割代入でかくとそのまま使えるprops.onAddと書かなくていい
+export default function TransactionForm({onAdd}) {  //  親から子に渡されたpropsはオブジェクトなので分割代入でかくとそのまま使えるprops.onAddと書かなくていい
+    const [amount, setAmount] = useState('');
+    const [type, setType] = useState('income'); //  収支管理
+    const [errorMessage, setErrorMessage] = useState(''); // エラーメッセージ用のstate
+
     //  登録処理
     const handleRegister = () => {
         const parsedAmount = parseFloat(amount);
         if (amount.trim() === "" || isNaN(parsedAmount) || parsedAmount <= 0) {
-            setErrorMessage('学習時間が入力されていません。')
+            setErrorMessage('金額が入力されていません。')
             return;
         }
         onAdd({ amount: parsedAmount, type}); // 親で定義した関数を呼び出すので親に渡すことができる

@@ -5,10 +5,7 @@ import TransactionList from "./components/TransactionList.jsx";
 
 function App() {
   const [transactions, setTransactions] = useState([]);
-  const [amount, setAmount] = useState('');
-  const [type, setType] = useState('income'); //  収支管理
   const [totalAmount, setTotalAmount] = useState(0);
-  const [errorMessage, setErrorMessage] = useState(''); // エラーメッセージ用のstate
 
   const handleAddTransaction = ({amount, type}) => {
     const adjustedAmount = type === "expense" ? -amount : amount
@@ -33,7 +30,7 @@ function App() {
       </Typography>
       <Stack spacing={2}>
       <Box><Typography variant="h5">残高: ¥{totalAmount}</Typography></Box>
-      <TransactionForm onAdd={handleAddTransaction} amount={amount} setAmount={setAmount} errorMessage={errorMessage} setErrorMessage={setErrorMessage} type={type} setType={setType} />
+      <TransactionForm onAdd={handleAddTransaction} />
       <TransactionList items={transactions} onRemove={handleRemoveTransaction} />
       </Stack>
     </Container>
