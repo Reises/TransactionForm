@@ -11,7 +11,7 @@
 # サイト
 以下のリンクから本アプリをご確認いただけます。
 <br>
-[学習アプリ](https://reises.github.io/studyRecord/)
+[学習アプリ](https://reises.github.io/TransactionForm/)
 
 # アーキテクチャ
 * フロントエンド：React + JavaScript + Vite
