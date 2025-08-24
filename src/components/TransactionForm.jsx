@@ -1,10 +1,14 @@
 import { useState } from "react";
 import { Button, TextField, Typography, Stack, Alert, Select, InputLabel, FormControl, MenuItem } from "@mui/material";
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 
 export default function TransactionForm({onAdd}) {  //  親から子に渡されたpropsはオブジェクトなので分割代入でかくとそのまま使えるprops.onAddと書かなくていい
     const [amount, setAmount] = useState('');
     const [type, setType] = useState('income'); //  収支管理
     const [errorMessage, setErrorMessage] = useState(''); // エラーメッセージ用のstate
+    const [date, setDate] = useState(null)
 
     //  登録処理
     const handleRegister = () => {
@@ -13,10 +17,15 @@ export default function TransactionForm({onAdd}) {  //  親から子に渡され
             setErrorMessage('金額が入力されていません。')
             return;
         }
-        onAdd({ amount: parsedAmount, type}); // 親で定義した関数を呼び出すので親に渡すことができる
+        if (date === null) {
+            setErrorMessage('日付が入力されていません')
+            return;
+        }
+        onAdd({ amount: parsedAmount, type, date}); // 親で定義した関数を呼び出すので親に渡すことができる
         setAmount("");
         setType("income");  //  初期化
         setErrorMessage('');
+        setDate(null);
     };
     return (
         <>
@@ -29,6 +38,10 @@ export default function TransactionForm({onAdd}) {  //  親から子に渡され
                         <MenuItem value="expense">支出</MenuItem>
                     </Select>
                 </FormControl>
+
+                 <LocalizationProvider dateAdapter={AdapterDayjs}>
+                    <DatePicker label="日付を選択してください" format="YYYY/MM/DD" value={date} onChange={(newDate) => setDate(newDate)}/>
+                </LocalizationProvider>
 
                 {/* 金額入力 */}
                 <TextField label="取引" margin="normal" value={amount} onChange={e => setAmount(e.target.value)} />
