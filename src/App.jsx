@@ -24,7 +24,7 @@ function App() {
     //  登録処理
     setTransactions([
       ...transactions,
-      {id: date, amount: adjustedAmount, date: dayjs(date).tz("Asia/Tokyo").format("YYYY-MM-DD"), type}
+      {id: `${date}-${Date.now()}`, amount: adjustedAmount, date: dayjs(date).tz("Asia/Tokyo").format("YYYY-MM-DD"), type}
     ]);
       setTotalAmount(prevAmount => prevAmount + adjustedAmount)
   }

@@ -44,7 +44,7 @@ export default function TransactionForm({onAdd}) {  //  親から子に渡され
                 </LocalizationProvider>
 
                 {/* 金額入力 */}
-                <TextField label="取引" margin="normal" value={amount} onChange={e => setAmount(e.target.value)} />
+                <TextField label="取引" type="number" margin="normal" value={amount} onChange={e => setAmount(e.target.value)} />
                 <Typography variant="body1">入力金額:{amount}</Typography>
                 <Button variant="contained" color="primary" onClick={handleRegister}>登録</Button>
                 {/* <Alert>{errorMessage}</Alert> */}
