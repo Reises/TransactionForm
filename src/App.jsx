@@ -19,12 +19,12 @@ function App() {
   const [transactions, setTransactions] = useState([]);
   const [totalAmount, setTotalAmount] = useState(0);
 
-  const handleAddTransaction = ({amount, type, date}) => {
+  const handleAddTransaction = ({amount, type, date, category}) => {
     const adjustedAmount = type === "expense" ? -amount : amount
     //  登録処理
     setTransactions([
       ...transactions,
-      {id: `${date}-${Date.now()}`, amount: adjustedAmount, date: dayjs(date).tz("Asia/Tokyo").format("YYYY-MM-DD"), type}
+      {id: `${date}-${Date.now()}`, amount: adjustedAmount, date: dayjs(date).tz("Asia/Tokyo").format("YYYY-MM-DD"), type, category}
     ]);
       setTotalAmount(prevAmount => prevAmount + adjustedAmount)
   }

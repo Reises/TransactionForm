@@ -9,6 +9,7 @@ export default function TransactionForm({onAdd}) {  //  親から子に渡され
     const [type, setType] = useState('income'); //  収支管理
     const [errorMessage, setErrorMessage] = useState(''); // エラーメッセージ用のstate
     const [date, setDate] = useState(null)
+    const [category, setCategory] = useState('');
 
     //  登録処理
     const handleRegister = () => {
@@ -21,7 +22,7 @@ export default function TransactionForm({onAdd}) {  //  親から子に渡され
             setErrorMessage('日付が入力されていません')
             return;
         }
-        onAdd({ amount: parsedAmount, type, date}); // 親で定義した関数を呼び出すので親に渡すことができる
+        onAdd({ amount: parsedAmount, type, date, category}); // 親で定義した関数を呼び出すので親に渡すことができる
         setAmount("");
         setType("income");  //  初期化
         setErrorMessage('');
@@ -37,6 +38,24 @@ export default function TransactionForm({onAdd}) {  //  親から子に渡され
                         <MenuItem value="income">収入</MenuItem>
                         <MenuItem value="expense">支出</MenuItem>
                     </Select>
+                </FormControl>
+
+                <FormControl fullWidth sx={{ mt: 2 }}>
+                    <InputLabel>カテゴリ</InputLabel>
+                    {type === "income" ? (
+                        <Select value={category} onChange={(e) => setCategory(e.target.value)}>
+                            <MenuItem value="給与">給与</MenuItem>
+                            <MenuItem value="副業">副業</MenuItem>
+                            <MenuItem value="投資">投資</MenuItem>
+                        </Select>
+                    ) : (
+                        <Select value={category} onChange={(e) => setCategory(e.target.value)}>
+                            <MenuItem value="食費">食費</MenuItem>
+                            <MenuItem value="交通費">交通費</MenuItem>
+                            <MenuItem value="娯楽費">娯楽費</MenuItem>
+                            <MenuItem value="その他">その他</MenuItem>
+                        </Select>
+                    )}
                 </FormControl>
 
                  <LocalizationProvider dateAdapter={AdapterDayjs}>
