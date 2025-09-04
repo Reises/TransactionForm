@@ -43,7 +43,7 @@ function App() {
       <Stack spacing={2}>
       <Box><Typography variant="h5">残高: ¥{totalAmount}</Typography></Box>
       <TransactionForm onAdd={handleAddTransaction} />
-      <TransactionList items={transactions} onRemove={handleRemoveTransaction} />
+      <TransactionList items={transactions} onRemove={handleRemoveTransaction} setItems={setTransactions} />
       </Stack>
     </Container>
   );
